@@ -1,0 +1,126 @@
+<html lagn="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script th:src="@{/js/layout/header.js}"></script>
+</th:block>
+    <!--headerFragment 선언-->
+    <div th:fragment="headerFragment">
+        <div class="header">
+			<div class="headerGroup">
+				<p class="headerLogo" ><a th:href="@{/}"><img style="width: 64%;" src="/assets/images/logo_02.png" /></a></p>
+				<ul class="menuList">
+					<li><a th:href="@{/project}" class="tro_a">Project</a></li>
+					<li><a th:href="@{/wjdals}" class="tro_a">회의정보 공유</a></li>
+					<li><a th:href="@{/infoshare/list}" class="tro_a">개발자 정보 공유</a></li>
+				</ul>
+<!-- 				<select class="dropdown" id="headerProjectList" placeholder="Please choose"> -->
+				<!-- 	<option></option>
+					<option></option>
+					<option></option>
+					<option></option>
+					<option></option> --> <!--2021.09.08 박소영 주석처리-->
+<!-- 				</select> -->
+
+				<!--[2021.09.12] 임현수 수정 : 로그인 하지 않았으면 버튼에 login으로 나오게, 로그인 했으면 로그인 사용자 이름 나오고 버튼 명칭은 logout으로 변경-->
+				<p class="logOut">
+					<a th:href="@{/user/logout}" th:if="${#httpServletRequest.UserPrincipal} != null">LOGOUT</a>
+					<a th:href="@{/user/logout}" th:unless="${#httpServletRequest.UserPrincipal} != null">LOGIN</a>
+				</p>
+					<!-- <img src="/assets/images/main_logo_02.png"> -->
+		<!-- 			<span class="loginUser"  th:if="${#httpServletRequest.UserPrincipal} != null">
+						<a class="infoUser"href="#"><img class="userImg" src="/assets/images/main_logo_02.png"></a>
+						<p>[[${#httpServletRequest.UserPrincipal.Principal.name}]] 님</p>
+					</span> -->
+					<div class="loginUser"  th:if="${#httpServletRequest.UserPrincipal} != null">
+						<ul>
+							<li class="infoUser"  style="padding-right:14px;"><a href="#"><img class="userImg" src="/assets/images/main_logo_02.png"></a></li>
+							<li style="padding-top:6px;">[[${#httpServletRequest.UserPrincipal.Principal.name}]] 님</li>
+						</ul>
+					</div>
+		</div>
+		
+		<div class="mobile-header">
+			<div class="mobileGroup">
+				<p class="mobile_logo_01"><img src="/assets/images/logo_02.png" /></p>
+			</div>
+			
+			<input type="checkbox" id="menuicon"/>
+				<label for="menuicon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</label>
+			<div class="sidebar">
+					<p class="mobile_logo_02"><a th:href="@{/}"><img style="width: 40%;" src="/assets/images/logo_04.png" /></a></p>
+					<ul class="sidebarGroup">
+						<li><a th:href="@{/project}" class="tro_a">Project</a></li>
+						<li><a th:href="@{/}" class="tro_a">회의정보 공유</a></li>
+						<li><a th:href="@{/infoshare/list}" class="tro_a">개발자 정보 공유</a></li>
+					</ul>
+			</div>
+		</div>
+		
+		<div class="ex_img">
+
+<!--  	<div class="ex_img" >
+			<ul>
+				<li><img src="/assets/images/background_ex01.jpg" /></li>
+				<li><img src="/assets/images/background_ex02.jpg" /></li>
+			</ul>
+		</div> --> <!--2021.08.10 박소영 주석처리-->
+<!-- 		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> -->
+<!-- 		<script  src="/assets/js/dropdown.js"></script> -->
+    	</div>
+	</div>
+		<!-- modify User -->
+		<div class="dialogGroup_02" id="modifyUser" style="display: none; padding: 6px 63px;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="userModifyForm" th:method="post" enctype="multipart/form-data" th:action="@{/user/update}">
+				<input type="hidden" id="uniqId" name="uniqId"/>
+				<ul class="join_02">
+					<li>
+						<label>아이디</label>
+						<input type="text"  id="userId" validate="number&english notEmpty minLength=3 maxLength=15" name="userId" title="ID" th:value="${#httpServletRequest.UserPrincipal.name}"/>
+					</li>
+					<li>
+						<label>비밀번호</label>
+						<input type="password"  id="password" validate="minLength=8 maxLength=25" name="password"  title="PW_01" />
+					</li>
+					<li>
+						<label>비밀번호 재확인</label>
+						<input type="password"  id="checkPwd" name="checkPwd" title="PW_02" maxlength=""/>
+					</li>
+					<li>
+						<label>이름</label>
+						<input type="text"  id="name" validate="hangle&english minLength=2 maxLength=20"  name="name" title="NAME" maxlength="" th:value="${#httpServletRequest.UserPrincipal.Principal.name}"/>
+					</li>
+					<li>
+						<label>소개글</label>
+						<input type="text"  id="note" name="note" validate="maxLength=500" title="NAME" maxlength="" />
+					</li>
+				</ul>
+				<div class="join_box">
+					<img id="userInfoImg" style="display: none;"></img>
+					<div class="fileUpload">이미지 등록</div>
+					<input type="file" style="display:none" name="imageFile" accept="image/*"/>
+				</div>
+			</form>
+			<div class="join_box userInfoBtn">
+				<div class="Save" id="save_user" onclick="userInfo.modify();">
+					<p>저장</p>
+				</div>
+				<div class="Delete" id="delete_user" onclick="userInfo.delete();">
+					<p>탈퇴</p>
+				</div>
+			</div>
+		</div>
+</html>
+
+<!-- 
+	<p>[[${#httpServletRequest.remoteUser}]]</p> 로그인아이디 
+	<p>[[${#httpServletRequest.UserPrincipal.name}]]</p> 로그인아이디
+	<p>[[${#httpServletRequest.UserPrincipal.Principal.name}]]</p> 로그인사용자 이름-->
+	
+	

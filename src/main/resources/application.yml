@@ -1,0 +1,72 @@
+spring :
+  application : 
+    name : troller
+  profiles : 
+    active : local
+  devtools : 
+    livereload : 
+      enabled : true
+  thymeleaf :
+    enabled : true
+    prefix : classpath:/templates/
+    suffix : .html
+    mode : HTML5
+    cache : false
+    check-template-location : true
+    order : 0
+  http : 
+    encoding : 
+      charset : utf-8
+      enabled : true
+      force : true
+  datasource : 
+    dirver-class-name : org.postgresql.Driver
+    url : jdbc:postgresql://kdhtoy.synology.me:5843/postgres
+    username : postgres
+    password : password12
+    hikari : 
+      minimum-idle : 10
+      maximun-pool-size : 50
+      #transaction-isolation : TRANSACTION_READ_UNCOMMITTED
+      pool-name : pool-torller
+  jpa : 
+    database-platform : org.hibernate.dialect.PostgreSQLDialect
+#    open-in-view : true
+#    show-sql : true
+    use_sql_comments : true
+    generate-ddl : true
+    hibernate : 
+      #none: 아무작업안함 create: 테이블삭제후 재생성 create-drop 삭제후 재생성 종료시 drop update:변경내용만 적용 validate 엔티티와 테이블이 매핑되었는지만 확인
+      ddl-auto : none
+      naming : 
+        implicit-strategy : org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy : org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate : 
+        format_sql: true
+  #2021.08.29. 임현수 추가 : 파일 업로드
+  servlet:
+    multipart:
+      enabled: true
+      #location: C:\\summernote_files\\
+      max-request-size: 100MB
+      max-file-size: 100MB
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+
+logging:
+  level:
+    org : 
+      hibernate : 
+        SQL : DEBUG
+        #info , trace
+        type : trace  
+
+server : 
+    port : 8082
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

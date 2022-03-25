@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/base-layout">
+
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+ 		<link rel="stylesheet" th:href="@{/assets/css/infoshare.css}" > 
+    </th:block>
+
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+     	<script th:src="@{/js/infoshare/list.js}"></script>
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+
+
+
+<div layout:fragment="content">
+	<input type="hidden" id="userId" th:value="${#httpServletRequest.remoteUser}"/>
+	<div class="boardGroup">
+		<div class="title">
+			<ul>
+				<li><img style="width:65%;" src="/assets/images/main_logo_02.png"/></li>
+				<li>게시판 목록</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="infoShare_List">
+		<div class="btn_area_01 .clearfix">
+	   		<button class="btn_writing" th:onclick="'javascript:infoShare_list.writeInfoShare();'">글쓰기</button>
+			<form style="float:right;" action="/infoshare/list" method="get" id="searchForm">
+				<input type="hidden" name="page" value="1"/>
+	    		<div class="page">
+	    			<select name="type">
+	      				<option value="">선택</option>
+	      				<option value="c" th:selected="${pageRequestDto.type == 'c'}">카테고리</option>
+	      				<option value="t" th:selected="${pageRequestDto.type == 't'}">제목</option>
+	    			</select>
+	    			<input type="text" name="keyword" th:value="${pageRequestDto.keyword}" placeholder="검색어를 입력하세요">
+	    			<button class="btn_search" th:onclick="'javascript:infoShare_list.getSearch();'">검색</button>
+	   			</div>
+  			</form>	
+  		</div>
+  	<div class="list_main">
+		    <table class="infoShare_table_01" >
+		      	<thead>
+		      		<colgroup>
+		        		<col width="5%"/>
+						<col width="10%"/>
+		        		<col width="50%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+		      		</colgroup>
+		      		<tr class="frame01">
+		        		<th class="title01">순번</th>
+		       			<th class="title01">카테고리</th>
+		        		<th class="title01">제목</th>
+		        		<th class="title01">첨부파일</th>
+		       			<th class="title01">작성자</th>
+		        		<th class="title01">작성일</th>
+		      		</tr>
+		      </thead>
+		      
+		      <tbody>
+		     	 <tr class="list_hover frame01"  th:if="${not #lists.isEmpty(boardList)}" th:each="dto : ${boardList}" th:onclick="|location.href='@{/infoshare/infoShareDetail(nttId=${dto.nttId}, page=${result.page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}'|">
+		        	<td th:text="${dto.nttId}" id="nttId"></td>
+		        	<td th:if="${dto.nttGb} == '1'"   th:text="java"></td>
+		        	<td th:if="${dto.nttGb} == '2'"   th:text="js"></td>
+		        	<td th:if="${dto.nttGb} == '3'"   th:text="기타"></td>
+		        	<td th:if="${dto.nttGb} == null"   th:text="''"></td>
+		        	<td style="text-align: left; padding-left: 50px;" th:text="${dto.title}"></td>
+		        	<td style="text-align: left; padding-left: 50px;" th:if="${dto.saveFileName} == null or ${dto.saveFileName} == ''"></td>
+					<td style="" th:unless="${dto.saveFileName} == null or ${dto.saveFileName} == ''"><img src="/assets/images/savefile_01.png" style="width: 32%; cursor:none;"></td>
+		        	<td th:text="${dto.userName}"></td>
+		       		<td th:text="${#temporals.format(dto.regDt, 'yyyy-MM-dd HH:mm')}"></td>
+		     	 </tr>
+
+			  	 <tr th:unless="${not #lists.isEmpty(boardList)}">
+					 <td colspan="5" style="padding-top: 15px;">조회된 결과가 없습니다.</td>
+				 </tr>
+		      </tbody>
+		    </table>
+
+		    
+		    <div class="numberPage" th:if="${!boardList.isEmpty() || boardList != null}">
+		    	<ul class="pagination">
+		    		<li class="page-item" th:if="${result.prev}" style="background:#a7a9ab; color:#fff; ">
+						<a th:href="@{/infoshare/list(page=${result.start -1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}" tabindex="-1"><img src=""/> < </a>
+					</li>
+					<li th:class="'page-item' + ${result.page == page ? 'active' : ''}" th:each="page: ${result.pageList}" th:onclick="|location.href='@{/infoshare/list(page=${page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}'|" th:text="${page}"></li>
+					<li class="page-item" th:if="${result.next}" style="background:#a7a9ab; color:#fff;">
+						<a th:href="@{/infoshare/list(page=${result.end + 1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}"><img src=""/>></a>
+					</li>
+		    	</ul>
+		    </div>
+  		</div>
+	</div>
+</div>
+</html>

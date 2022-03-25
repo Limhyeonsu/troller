@@ -1,0 +1,46 @@
+image: troller
+
+
+stages:
+  - test
+  - clean-docker
+  - docker-build
+  - deploy
+
+test:
+  stage: test
+  tags:
+    - deploy
+  only:
+    - main
+  script:
+    - mvn test
+
+
+clean-docker:
+  stage: clean-docker
+  tags:
+    - deploy
+  only:
+    - main
+  script: 
+    - sh /home/gitlab-runner/troller.sh
+    
+docker-build:
+  stage: docker-build
+  tags:
+    - deploy
+  only:
+   - main
+  script:
+    - mvn clean package -B
+    - docker build -t troller .
+
+doploy:
+  stage: deploy
+  tags:
+    - deploy
+  only:
+    - main
+  script:
+    - docker run -v troller:/resources -p 1004:8082 --name troller -d troller

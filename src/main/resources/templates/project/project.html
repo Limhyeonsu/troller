@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/base-layout">
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+    	<link rel="stylesheet" th:href="@{/assets/onepageScroller/full-page-scroll.css}" >
+    	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css}" >
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}" >
+		<link rel="stylesheet" th:href="@{/assets/calendar/main.css}" >
+		
+		<link rel="stylesheet" th:href="@{../css/index.css}" >
+    </th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+    	<script th:src="@{/assets/onepageScroller/full-page-scroll.js}"></script>
+    	<script th:src="@{https://cdn.jsdelivr.net/npm/flatpickr}"></script>
+    	<script th:src="@{https://npmcdn.com/flatpickr/dist/l10n/ko.js}"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/assets/calendar/main.js}"></script>
+        <script th:src="@{/assets/calendar/locales-all.js}"></script>
+        <script th:src="@{/js/project/project.js}"></script>
+    </th:block>
+
+
+	<div layout:fragment="content" id="main" style="hiegth:100%">
+		<!-- new -->
+		<div class="carousel">
+		<!--2021.08.24 박소영 주석처리-->
+			<!--2021.08.24 박소영 새로추가-->
+			<div class="project">
+				<div class="project_Menu">
+					<ul>
+						<li>
+							<div class="box" btnType="newProject">
+								<a class="btn btn1" href="#"><span>New<br/>Project</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="box" btnType="newClient">
+								<a class="btn btn1" href="#"><span>New<br/>Client</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="box" btnType="newUser">
+								<a class="btn btn1" href="#"><span>New<br/>User</span></a>
+							</div>
+						</li>
+					</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		<!-- calendar -->
+		<div class="carousel">
+			<div class="headerGroup">
+				<select class="dropdown" id="dropdownProjectList">
+				<!-- 	<option></option>
+					<option></option>
+					<option></option>
+					<option></option>
+					<option></option> --> <!--2021.09.08 박소영 주석처리-->
+				</select>
+		    </div>
+		    <div id="calendar">
+		    	
+		    </div>
+		</div>
+		
+		<!-- new Project -->
+		<div class="dialogGroup_02" id="newProject" style="display: none;  padding:6px 63px; ">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="projectSaveForm" th:method="post" th:action="@{/project/save}">
+			<ul class="join_02">
+				<li>
+					<label>제목</label>
+					<input type="text"  id="title" name="title" validate="hangle&number&english maxLength=25 minLength=1" title="title" placeholder="제목을 입력해주세요"/>
+				</li>
+				<li>
+					<label>설명</label>
+					<input type="textarea"  id="content" name="content" validate="maxLength=500" title="content" placeholder="설명을 입력해주세요"/>
+				</li>
+				<li>
+					<label>금액</label>
+					<input type="number"  id="cost" name="cost" validate="number min=0 max=9999999999" title="cost"  maxlength="20"/>
+				</li>
+				<li>
+					<label>클라이언트 명</label>
+					<select id="clientList" name="clientId">
+					</select>
+				</li>
+			</ul>
+			<div class="join_box">
+				<div class="fileUpload">이미지 등록</div>
+				<input type="file" style="display:none" name="imageFile"/>
+			</div>
+			</form>
+			<div class="join_box_02">
+				<div class="Save" id="save_project" onclick="project.save();">
+					<p>저장</p>
+				</div>
+			</div>
+		</div>
+			
+		<!-- newClient -->
+		<div class="dialogGroup_02" id="newClient" style="display: none; padding: 6px 63px;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="clientSaveForm" th:method="post" th:action="@{/client/save}">
+			<ul class="join_02">
+				<li>
+					<label>이름</label>
+					<input type="text"  id="name" name="name" title="name" validate="hangle&english notEmpty minLength=2 maxLength=25" placeholder="이름을 입력해주세요"/>
+				</li>
+				<li>
+					<label>전화번호</label>
+					<input type="text"  id="phoneNumber" name="phoneNumber"  title="phoneNumber" placeholder="전화번호를 입력해주세요"/>
+				</li>
+				<li>
+					<label>지역구분</label>
+					<input type="text"  id="district" name="district" title="district" maxlength="20" placeholder="지역을 입력해주세요"/>				
+				</li>
+			</ul>
+			</form>
+			
+			<div class="join_box_02">
+				<div class="Save" id="save_client" onclick="project_client.save();">
+					<p>저장</p>
+				</div>
+			</div>
+				
+		</div>
+			
+		<!-- new User -->
+		<div class="dialogGroup_02" id="newUser" style="display: none; padding: 6px 63px;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="userSaveForm" th:method="post" enctype="multipart/form-data" th:action="@{/user/joinuser}">
+			<ul class="join_02">
+				<li>
+					<label>아이디</label>
+					<input type="text"  id="userId" validate="number&english notEmpty minLength=3 maxLength=15" name="userId" title="ID" placeholder="아이디를 입력해주세요"/>
+				</li>
+				<li>
+					<label>비밀번호</label>
+					<input type="password"  id="password" validate="minLength=8 maxLength=25" name="password"  title="PW_01" placeholder="비밀번호를 입력해주세요"/>
+				</li>
+				<li>
+					<label>비밀번호 재확인</label>
+					<input type="password"  id="checkPwd" name="checkPwd" title="PW_02" maxlength=""/>				
+				</li>
+				<li>
+					<label>이름</label>
+					<input type="text"  id="name" validate="hangle&english minLength=2 maxLength=20"  name="name" title="NAME" maxlength=""/>
+				</li>
+				<li>
+					<label>소개글</label>
+					<input type="text"  name="note" validate="maxLength=500" title="NAME" maxlength=""/>
+				</li>
+			</ul>
+			<div class="join_box">
+				<div class="fileUpload">이미지 등록</div>
+				<input type="file" style="display:none" name="imageFile" accept="image/*"/>
+			</div>
+			</form>
+			<div class="join_box">
+				<div class="Save" id="save_user" onclick="project_user.save();">
+					<p>저장</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- new Project Wbs -->
+		<div class="dialogGroup" id="newWbs" style="display: none;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="projectWbsSaveForm" th:method="post" th:action="@{/project/save}">
+			<input type="hidden" id="proId" name="proId" value=""/>
+			<input type="hidden" id="str_schStartDt" name="str_schStartDt" value=""/>
+			<input type="hidden" id="str_schEndDt" name="str_schEndDt" value=""/>
+			<input type="hidden" id="depth" name="depth" value="0"/>
+			<ul class="join">
+				<li>
+					<label>제목</label>
+					<input type="text"  id="title" name="title" validate="notEmpty minLength=2 maxLength=25" title="title" placeholder="제목을 입력해주세요"/>
+				</li>
+				<li>
+					<label>설명</label>
+					<input type="textarea"  id="content" name="content" validate="maxLength=500" title="content" placeholder="설명을 입력해주세요"/>
+				</li>
+				<li>
+					<label>상위 스케줄</label>
+					<select id="wbsParent" name="parent">
+					</select>			
+				</li>
+				<li>
+					<label>개발자</label>
+					<select id="wbsDeveloper" name="developer">
+					</select>			
+				</li>
+				<li style="padding-top: 9px;"><!--2021.09.15 박소영 수정 as-is: padding-top: 32px;-->
+					<label>일정</label>
+					<input type="text" class="selector"  name="wbsDate" id="wbsDate" placeholder="날짜를선택하세요"/>
+				</li>
+			</ul>
+			</form>
+			<div class="join_box">
+				<div class="Save" id="save_wbs" onclick="project_wbs.save();">
+					<p>저장</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- new Project Issue -->
+		<div class="dialogGroup" id="newProjectIssue" style="display: none;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			<form id="projectIssueSaveForm" th:method="post" th:action="@{/project/save}">
+			<input type="hidden" id="pro_id" name="proId" value=""/>
+			<ul class="join">
+				<li>
+					<label>제목</label>
+					<input type="text"  id="title" name="title" validate="minLength=2 maxLength=25 notEmpty hangle&numbber&english" title="title" placeholder="제목을 입력해주세요"/>
+				</li>
+				<li>
+					<label>설명</label>
+					<input type="textarea"  id="content" name="content" validate="maxLength=500" title="content" placeholder="설명을 입력해주세요"/>
+				</li>
+				<li>
+					<label>금액</label>
+					<input type="number"  id="cost" name="cost" title="cost" validate="number min=0 max=9999999999" maxlength="20"/>				
+				</li>
+				<li style="padding-top: 32px;">
+					<label>클라이언트 명</label>
+					<select id="clientList" name="clientId">
+					</select>
+				</li>
+			</ul>
+			</form>
+			<div class="join_box">
+				<div class="Save" id="save_project_issue" onclick="project_issue.save();">
+					<p>저장</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- new Project Wbs Issue-->
+		<div class="dialogGroup" id="newProjectWbsIssue" style="display: none;">
+			<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+			
+			<ul class="join">
+				
+				<form id="projectWbsIssueSaveForm" th:method="post" th:action="@{/project/wbs/issue/save}">
+					<input type="hidden" data-column="proId" validate="notEmpty" name="proId" value=""/>
+					<input type="hidden" data-column="wbsId" validate="notEmpty" name="wbsId" value=""/>
+					<input type="hidden" id="str_schStartDt" validate="notEmpty" name="str_schStartDt" value=""/>
+					<input type="hidden" id="str_schEndDt" validate="notEmpty" name="str_schEndDt" value=""/>
+				<li>
+					<label>제목</label>
+					<input type="text" data-column="title" validate="notEmpty hangle&english&number maxLength=50 minLength=2" name="title"/>
+				</li>
+				<li>
+					<label>설명</label>
+					<input type="textarea" data-column="content" validate="notEmpty hangle&english&number maxLength=500 minLength=2" name="content"/>
+				</li>
+				
+<!-- 				<li> -->
+<!-- 					<label>수정사유</label> -->
+<!-- 					<input type="text"  name="title" title="title" validate="notEmpty" placeholder="제목을 입력해주세요" /> -->
+<!-- 				</li> -->
+<!-- 				<li> -->
+<!-- 					<label>설명</label> -->
+<!-- 					<input type="textarea"  name="content" validate="maxLength=500 notEmpty"  title="content" placeholder="설명을 입력해주세요" /> -->
+<!-- 				</li> -->
+				<li>
+				
+				</li>
+				<li>
+					<label>상위 스케줄</label>
+					<select id="wbsIssueParent" name="parent">
+					</select>			
+				</li>
+				<li>
+					<label>개발자</label>
+					<select name="developer" data-column="developer" id="wbsIssueDeveloper">
+					</select>
+				</li>
+				<li style="padding-top: 9px;"><!--2021.09.15 박소영 수정 as-is: padding-top: 32px;-->
+					<label>일정</label>
+					<input type="text" class="selector" validate="notEmpty" name="wbsIssueDate" id="wbsIssueDate" placeholder="날짜를선택하세요"/>
+				</li>
+			</ul>
+			</form>
+			<div class="join_box">
+				<div class="Save" id="save_project_wbs_issue" onclick="project_wbs.update();">
+					<p>저장</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+</html>

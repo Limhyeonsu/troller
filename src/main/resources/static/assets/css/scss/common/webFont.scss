@@ -1,0 +1,45 @@
+/*웹폰트*/
+@font-face {
+  font-family: 'notokr-bold';
+  src: url('../font/notoKR-Bold/notokr-bold.eot');
+  src: url('../font/notokr-bold/notokr-bold.eot?#iefix') format("embedded-opentype"), url('../font/notoKR-Bold/notokr-bold.woff2') format("woff2"), url('../font/notoKR-Bold/notokr-bold.woff') format("woff"), url('../font/notoKR-Bold/notokr-bold.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'notokr-medium';
+  src: url('../font/notoKR-Medium/notokr-medium.eot');
+  src: url('../font/notoKR-Medium/notokr-medium.eot?#iefix') format("embedded-opentype"), url('../font/notoKR-Medium/notokr-medium.woff2') format("woff2"), url('../font/notoKR-Medium/notokr-medium.woff') format("woff"), url('../font/notoKR-Medium/notokr-medium.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'notokr-regular';
+  src: url('../font/notoKR-Regular/notokr-regular.eot');
+  src: url('../font/notoKR-Regular/notokr-regular.eot?#iefix') format("embedded-opentype"), url('../font/notoKR-Regular/notokr-regular.woff2') format("woff2"), url('../font/notoKR-Regular/notokr-regular.woff') format("woff"), url('../font/notoKR-Regular/notokr-regular.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Nanumsquare_L";
+  src: url("../font/nanumsquare/NanumSquare_acL.eot?") format("eot"), url("../font/nanumsquare/NanumSquare_acL.woff") format("woff"), url("../font/nanumsquare/NanumSquare_acL.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Nanumsquare_B";
+  src: url("../font/nanumsquare/NanumSquare_acB.eot?") format("eot"), url("../font/nanumsquare/NanumSquare_acB.woff") format("woff"), url("../font/nanumsquare/NanumSquare_acB.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neogm";
+  src: url("../font/neogm/neogm.eot?") format("eot"), url("../font/neogm/neodgm.woff2") format("woff2"), url("../font/neogm/NeoDunggeunmo-Regular.woff") format("woff"), url("../font/neogm/NeoDunggeunmo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

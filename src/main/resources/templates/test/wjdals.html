@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/base-layout">
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+<!-- 		<link rel="stylesheet" th:href="@{/assets/css/main.css}" > -->
+    </th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+<!--     	<script th:src="@{/assets/js/main.js}"></script> -->
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+
+
+	<div layout:fragment="content">
+		<img src="/_data/resources/projectImages/1632382590701.png"/>
+		<h1 style="text-align: center; margin-top: 30%; font-size: 80px;">cicdtest....</h1>
+		<h1 style="text-align: center; margin-top: 30%; font-size: 80px;">최정민 개발자 작업 대기중...</h1>
+		<script>
+			setInterval(() => {
+				let color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+				
+				$('h1').css("color", color);
+			}, 500)
+		</script>
+	</div>
+</html>

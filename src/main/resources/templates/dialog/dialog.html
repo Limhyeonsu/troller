@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/none-layout">
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+<!-- 		<link rel="stylesheet" th:href="@{/assets/css/main.css}" > -->
+    </th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+<!--     	<script th:src="@{/assets/js/main.js}"></script> -->
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+
+	<body class="test">
+		<div layout:fragment="content">
+			<div class="dialogGroup">
+				<dl><dt><img src="/assets/images/logo_02.png"/></dt></dl>
+				<ul class="join">
+					<li>
+						<label>아이디</label>
+						<input type="text"  id="" name="id" title="ID" placeholder="아이디를 입력해주세요"/>
+					</li>
+					<li>
+						<label>비밀번호</label>
+						<input type="password"  id="" name="pw_01"  title="PW_01" placeholder="비밀번호를 입력해주세요"/>
+					</li>
+					<li>
+						<label>비밀번호 재확인</label>
+						<input type="password"  id="" name="pw_02" title="PW_02" maxlength=""/>				
+					</li>
+					<li style="padding-top: 32px;">
+						<label>이름</label>
+						<input type="text"  id=""  name="name" title="NAME" maxlength=""/>
+					</li>
+					
+					<li>
+						<div class="join_code">
+							<select id="" name="" aria-label="전화번호 입력">
+								<option>대한민국+82</option>
+								<option>...</option>
+								<option>...</option>
+							</select>
+							
+							<div class="enterNumber">
+								<input type="text"  id="" name="" placeholder="전화번호 입력"/>
+								<p class="numberBtn">인증번호 받기</p>
+							</div>
+								<input type="text"  id="" name="" placeholder="인증번호 입력하세요"/>
+						</div>
+					</li>
+				</ul>
+
+				<div class="join_box">
+					<label class="checkbox">
+						<input type="checkbox"/>
+						<span class="icon"></span>
+						<span class="text">Test 체크박스입니다.</span>
+					</label>
+					
+					<div class="fileUpload">파일등록버튼</div>
+					<div class="Save">
+						<p>저장</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

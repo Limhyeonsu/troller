@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/base-layout">
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+ 		<link rel="stylesheet" th:href="@{/assets/summernote/summernote-lite.min.css}" >
+    </th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+     	<script th:src="@{/assets/summernote/summernote-lite.min.js}"></script>
+     	<script th:src="@{/js/infoshare/input.js}"></script>
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+<!--  [2021.08.19] 현수 주석처리
+<head>2021.08.18 박소영 추가
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+</head>
+-->
+<head>
+	<style>
+		.notice-box {
+			text-align:left;
+		}
+		.notice-box p {
+			-webkit-margin-before: .3em;
+			-webkit-margin-after: .5em;
+		}
+		#fileRmvBtn {
+			display:inline-block;
+			padding:2px 5px;
+			font-weight: 700;
+			text-shadow: 0 1px 0 #fff;
+			font-size: 1.3rem;
+		}
+		#fileRmvBtn:hover {
+			border: 0;
+			cursor:pointer;
+			opacity: .75;
+		}
+
+	</style>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+		<div layout:fragment="content">
+			<div class="board">
+				<div class="boardGroup">
+					<div class="title">
+						<ul>
+							<li><img style="width:65%;" src="/assets/images/main_logo_02.png"/></li>
+							<li>게시판</li>
+						</ul>
+					</div>
+				</div>
+				
+				<form th:method="post" th:action="@{/infoshare/register}" id="infoshare_form" name="infoshare_form" enctype="multipart/form-data">
+					<input type="hidden" name="nttId" th:if="${dto != null}" th:value="${dto.nttId}"/>
+					<input type="hidden" id="dto_nttGb" neme="nttGb" th:if="${dto != null}" th:value="${dto.nttGb}"/>
+					<div class="bulletin_Board">
+						<h3 class="board_title" th:if="${dto == null}">게시판 글쓰기</h3>
+						<h3 class="board_title" th:unless="${dto == null}">게시판 수정</h3>
+						<table class="table_col">
+							<tbody>
+								<tr>
+									<th><span>제목</span></th>
+									<td>
+										<select id="nttGb" name = "nttGb">
+											<option value="">선택</option>
+											<option value="1">java</option>
+											<option value="2">js</option>
+											<option value="3">기타</option>
+										</select>
+										<input  type="text" id="title" name="title" th:value="${dto == null ? '' : dto.title}" placeholder="제목을 입력해주세요.">
+									</td>
+								</tr>
+								<tr>
+									<th><span>내용</span></th>
+									<td>
+										<textarea id="summernote" class="note" name="content" th:utext="${dto == null ? '' : dto.content}"></textarea>
+									</td>
+								</tr>
+
+								<tr>
+									<th><span>첨부파일</span></th>
+									<td>
+										<div class="fileupload_02">
+										<!--<ul>
+												<input type="file" id="uploadFile" name="file">
+												<input type="hidden" id="saveFileName" name="saveFileName">
+											</ul> --><!--2021.09.10 박소영 주석처리-->
+
+											<!--2021.09.10 박소영 새로추가-->
+											<div class="file_input">
+												<label>
+												   파일선택
+													<input type="file"  id="uploadFile" name="file" onchange="javascript:document.getElementById('file_route').value=this.value">
+												</label>
+												<input type="text" readonly="readonly" title="File Route" id="file_route">
+												<input type="hidden" id="saveFileName" name="saveFileName">
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr th:if="${dto?.originFileName != null}">
+									<th><span>첨부된 파일</span></th>
+									<td>
+										<div class="notice-box">
+											<input type="text" class="saveFile" th:value="${dto.originFileName}" readonly/>
+											<span id='fileRmvBtn' th:data-param1="${dto.nttId}" th:data-param2="${dto.saveFileName}" th:onclick="|javascript:infoShare_input.removeFile(this.getAttribute('data-param1'),this.getAttribute('data-param2'))|">&times;</span>    <!-- onclick="this.parentNode.style.display = 'none';" -->
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="save" th:if="${dto == null}" th:onclick="|javascript:infoShare_input.saveInfoShare('save');|">
+							<a class="save-btn">저장</a>
+						</div>
+						<div class="save" th:unless="${dto == null}" th:onclick="|javascript:infoShare_input.saveInfoShare('modify');|">
+							<a class="save-btn">수정</a>
+						</div>
+					</div>
+				</form>
+					<!--2021.09.10 박소영 주석처리/게시판 디자인 2차 수정하기 때문-->
+<!-- 				<form th:method="post" th:action="@{/infoshare/register}" id="infoshare_form" name="infoshare_form" enctype="multipart/form-data">
+					<input type="hidden" neme="nttId" th:if="${dto != null}" th:value="${dto.nttId}"/>
+					<input type="hidden" id="dto_nttGb" neme="nttGb" th:if="${dto != null}" th:value="${dto.nttGb}"/>
+					<div class="boardTitle">
+						<select id="nttGb" name = "nttGb">
+							<option value="">선택</option>
+							<option value="1">java</option>
+							<option value="2">js</option>
+							<option value="3">기타</option>
+						</select>
+						<input  type="text" id="title" name="title" th:value="${dto == null ? '' : dto.title}" placeholder="제목을 입력해주세요.">
+					</div>
+					<textarea id="summernote" class="note" name="content" th:utext="${dto == null ? '' : dto.content}"></textarea>썸머노트
+					<div class="fileupload_02">
+						<ul>
+							<input type="file" id="uploadFile" name="file">
+							<input type="hidden" id="saveFileName" name="saveFileName">
+						</ul>
+						<ul>
+							<label>첨부된 파일</label><input type="text" name="saveFile" th:text="${dto == null ? '' : dto.saveFileName}" readonly/><button>삭제</button>
+						</ul>
+					</div>
+					<div class="save" th:onclick="'javascript:infoShare_input.saveInfoShare();'">
+						<a class="save-btn" >저장</a>
+					</div>
+				</form> -->
+			</div>
+		</div>
+</html>

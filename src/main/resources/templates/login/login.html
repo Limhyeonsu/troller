@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/none-layout">
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+<!-- 		<link rel="stylesheet" th:href="@{/assets/css/main.css}" > -->
+    </th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+<!--     	<script th:src="@{/assets/js/main.js}"></script> -->
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+
+	
+	<div layout:fragment="content">
+		<form th:action="@{/loginProcess}" id="loginForm" method="POST">
+			<div class="login">
+				<div class="loginGroup">
+					<p class="titleImg" style="padding-top: 65px;"><img src="/assets/images/logo_01.png" /></p>
+					<ul class="inputGroup">
+						<li><input type="text" id="username" name="username" value="" autofocus required title="아이디" placeholder="ID" style="margin-left: -56px;"></li>
+						<li><input type="password" id="password" name="password" required title="비밀번호" placeholder="PW" style="margin-left: -56px;"></li>
+					</ul>
+					<button type="submit" class="loginBtn">login</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+</html>

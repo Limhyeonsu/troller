@@ -1,0 +1,750 @@
+/*common.css*/
+/*------------header-----------*/
+body {
+  width: 100%;
+  height: auto;
+}
+
+.mobile-header {
+  display: none;
+}
+
+.header {
+  border: 1px solid $border-color02;
+  border-width: 0px 0px 1px 0px;
+  padding: 15px 15px 23px 60px;
+  position: relative !important;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  .headerGroup {
+    border: 0px solid blue;
+    overflow: hidden;
+    padding-top: 11px;
+    display: flex;
+
+    /* position: relative; */
+
+    /*2021.09.07 박소영 주석처리*/
+
+    .menuList {
+      border: 0px solid black;
+      display: flex;
+      padding-top: 9px;
+      font-size: 18px;
+
+      li {
+        padding-right: 60px;
+        cursor: pointer;
+      }
+    }
+
+    .logOut {
+      position: absolute;
+      right: 95px;
+      top: 20px;
+      border: 0px solid #b1b1b1;
+      padding: 11px;
+      border-radius: 25px;
+      font-family: notokr-medium;
+      cursor: pointer;
+    }
+  }
+}
+
+.logOut {
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow: inset 0px 0px 0px #47bc97;
+    display: block;
+    -webkit-transition: all 0.4s cubic-bezier(0.5, 0.24, 0, 1);
+    transition: all 0.7s cubic-bezier(0.5, 0.24, 0, 1);
+    border-radius: 25px;
+  }
+
+  a:hover {
+    color: #fff;
+  }
+
+  &:hover::before {
+    box-shadow: inset 300px 0px 0px #47bc97;
+  }
+}
+
+.menuList li .tro_a {
+  cursor: pointer;
+  font-family: 'notokr-medium';
+
+  &:hover {
+    color: #47bc97;
+    transition: all 0.3s;
+  }
+}
+
+/*2021.09.14 박소영 새로추가 (헤더이미지, 로그인 유저환영합니다 등)*/
+
+.loginUser {
+  position: absolute;
+  right: 207px;
+  /*top: 31px;*/
+  font-family: notokr-medium;
+  
+  ul{
+  	display:flex;
+  }
+}
+
+.userImg {
+  /*width: 40%;*/
+  width:38px;
+  /*position: absolute;
+  top: -5px;
+  right: 97px;*/
+}
+
+/*----드랍메뉴-----*/
+
+.headerGroup .dropdown {
+  --text:#3F4656;
+  --borderActive:#23C4F8;
+  --background:#151924;
+  --arrow:#6C7486;
+  --arrowActive:#E4ECFA;
+  --listText:#99A3BA;
+  --listBackground:#F5F9FF;
+  --listActive:#E4ECFA;
+  --listTextActive:#6C7486;
+  --listBorder:none;
+  --textFilled:#99A3BA;
+  width: 220px;
+
+  /*position: relative;*/
+
+  select {
+    display: none;
+  }
+
+  > span {
+    cursor: pointer;
+    padding: 9px 16px;
+    border-radius: 6px;
+    display: block;
+    position: relative;
+    color: var(--text);
+    border: 2px solid #adadad;
+    background: #fff;
+    transition: all .3s ease;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 8px;
+      height: 2px;
+      border-radius: 1px;
+      top: 50%;
+      right: 15px;
+      background: var(--arrow);
+      transition: all .3s ease;
+    }
+  }
+}
+
+.dropdown > span:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  top: 50%;
+  right: 15px;
+  background: var(--arrow);
+  transition: all .3s ease;
+}
+
+.headerGroup .dropdown {
+  > span {
+    &:before {
+      margin-right: 4px;
+      -webkit-transform: scale(0.96, 0.8) rotate(50deg);
+      transform: scale(0.96, 0.8) rotate(50deg);
+    }
+
+    &:after {
+      -webkit-transform: scale(0.96, 0.8) rotate(-50deg);
+      transform: scale(0.96, 0.8) rotate(-50deg);
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 46px;
+    left: 16px;
+
+    /*2021.09.03 박소영 as-is: left:0px; 위 메뉴와 간격이 안 맞아 조정함 */
+    right: 0;
+    background: var(--listBackground);
+    border-radius: 6px;
+    overflow: hidden;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease, -webkit-transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32), -webkit-transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+    -webkit-transform: scale(0.8) translate(0, 4px);
+    transform: scale(0.8) translate(0, 4px);
+    border: 1px solid var(--listBorder);
+    z-index: 9999;
+
+    li {
+      opacity: 0;
+      -webkit-transform: translate(6px, 0);
+      transform: translate(6px, 0);
+      transition: all .3s ease;
+      z-index: 9999;
+
+      a {
+        cursor: pointer;
+        display: block;
+        padding: 10px 16px;
+        color: #cacfdc;
+        text-decoration: none;
+        outline: none;
+        position: relative;
+        transition: all .3s ease;
+
+        &:hover {
+          color: #2f3b68;
+        }
+      }
+
+      &.active a {
+        color: var(--listTextActive);
+        background: var(--listActive);
+
+        &:before {
+          --scale:.6;
+          content: '';
+          display: block;
+          width: 10px;
+          height: 2px;
+          position: absolute;
+          right: 17px;
+          top: 50%;
+          opacity: 0;
+          background: var(--listText);
+          transition: all .2s ease;
+        }
+      }
+    }
+  }
+}
+
+.dropdown ul li.active a:after {
+  --scale:.6;
+  content: '';
+  display: block;
+  width: 10px;
+  height: 2px;
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  opacity: 0;
+  background: var(--listText);
+  transition: all .2s ease;
+}
+
+.headerGroup .dropdown ul li.active a {
+  &:before {
+    -webkit-transform: rotate(45deg) scale(var(--scale));
+    transform: rotate(45deg) scale(var(--scale));
+  }
+
+  &:after {
+    -webkit-transform: rotate(-45deg) scale(var(--scale));
+    transform: rotate(-45deg) scale(var(--scale));
+  }
+
+  &:hover:before {
+    --scale:.9;
+    opacity: 1;
+  }
+}
+
+.dropdown ul li.active a:hover:after {
+  --scale:.9;
+  opacity: 1;
+}
+
+.headerGroup .dropdown {
+  ul li {
+    &:first-child a {
+      border-radius: 6px 6px 0 0;
+    }
+
+    &:last-child a {
+      border-radius: 0 0 6px 6px;
+    }
+  }
+
+  &.filled > span {
+    color: var(--textFilled);
+  }
+
+  &.open > span {
+    border-color: #47bc97;
+
+    &:before {
+      background: #47bc97;
+    }
+  }
+}
+
+.dropdown.open > span:after {
+  background: #47bc97;
+}
+
+.headerGroup .dropdown {
+  &.open {
+    > span {
+      &:before {
+        -webkit-transform: scale(0.96, 0.8) rotate(-50deg);
+        transform: scale(0.96, 0.8) rotate(-50deg);
+      }
+
+      &:after {
+        -webkit-transform: scale(0.96, 0.8) rotate(50deg);
+        transform: scale(0.96, 0.8) rotate(50deg);
+      }
+    }
+
+    ul {
+      border: 1px solid #cecece;
+      width: 190px;
+
+      /*2021.09.03 박소영 as-is : width:220px;*/
+      opacity: 1;
+      visibility: visible;
+      -webkit-transform: scale(1) translate(0, 12px);
+      transform: scale(1) translate(0, 12px);
+      transition: opacity 0.3s ease, visibility 0.3s ease, -webkit-transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32), -webkit-transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+
+      li {
+        opacity: 1;
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+
+        &:nth-child(1) {
+          transition-delay: 80ms;
+        }
+
+        &:nth-child(2) {
+          transition-delay: 160ms;
+        }
+
+        &:nth-child(3) {
+          transition-delay: 240ms;
+        }
+
+        &:nth-child(4) {
+          transition-delay: 320ms;
+        }
+
+        &:nth-child(5) {
+          transition-delay: 400ms;
+        }
+
+        &:nth-child(6) {
+          transition-delay: 480ms;
+        }
+
+        &:nth-child(7) {
+          transition-delay: 560ms;
+        }
+
+        &:nth-child(8) {
+          transition-delay: 640ms;
+        }
+
+        &:nth-child(9) {
+          transition-delay: 720ms;
+        }
+
+        &:nth-child(10) {
+          transition-delay: 800ms;
+        }
+      }
+    }
+  }
+
+  padding: 9px 16px;
+  border-radius: 6px;
+  color: var(--text);
+
+  /*border: 1px solid var(--border);*/
+  /*background: var(--background);*/
+  line-height: 22px;
+  font-size: 16px;
+  font-family: inherit;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 15%;
+
+  /*2021.09.14 박소영 수정 as-is: 252px*/
+  top: 10px;
+
+  /*2021.09.07 as-is: top:5px; */
+}
+
+/*.headerGroup select {
+  --text: #3F4656;
+  --border: #2F3545;
+  --background: #151924;
+}*/
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: inherit;
+
+  &:before, &:after {
+    box-sizing: inherit;
+  }
+}
+
+.headerGroup .switch {
+  height: 20px;
+  display: block;
+  position: relative;
+  cursor: pointer;
+
+  input {
+    display: none;
+
+    + span {
+      padding-left: 38px;
+      min-height: 20px;
+      line-height: 20px;
+      display: block;
+      color: #3F4656;
+      position: relative;
+      white-space: nowrap;
+
+      &:not(:empty) {
+        padding-left: 46px;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+.switch input + span:after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 10px;
+}
+
+.headerGroup .switch {
+  input {
+    + span {
+      &:before {
+        top: 0;
+        left: 0;
+        width: 38px;
+        height: 20px;
+        border: 1px solid #2F3545;
+        transition: all .3s ease;
+      }
+
+      &:after {
+        width: 14px;
+        height: 14px;
+        background: #2F3545;
+        top: 3px;
+        left: 3px;
+        transition: all .45s ease;
+      }
+
+      + svg {
+        display: none;
+      }
+    }
+
+    &:checked + span {
+      &:before {
+        background: #5628EE;
+        border-color: #5628EE;
+      }
+
+      &:after {
+        background: #fff;
+        -webkit-transform: translate(18px, 0);
+        transform: translate(18px, 0);
+      }
+    }
+  }
+
+  &:hover input:not(:checked) + span:before {
+    border-color: #23C4F8;
+  }
+}
+
+/*---드랍메뉴_종료-----*/
+/*-------------header_종료-------------*/
+
+/*-------------header-모바일-------------*/
+
+/*2021.09.06 as-is: @media screen and (max-width:769px); 박소영 수정 */
+@media screen and (max-width: 1120px) {
+  .header {
+    display: none;
+  }
+
+  .mobile-header {
+    display: block;
+    width: 100%;
+    height: 80px;
+    border: 0px solid blue;
+
+    input[id="menuicon"] {
+      display: none;
+
+      + label {
+        display: block;
+        width: 33px;
+        height: 28px;
+        position: relative;
+        cursor: pointer;
+        float: right;
+        margin-top: -27px;
+        margin-right: 30px;
+
+        span {
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 5px;
+          border-radius: 30px;
+          background: #909090;
+          transition: all .35s;
+
+          &:nth-child(1) {
+            top: 0;
+          }
+
+          &:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          &:nth-child(3) {
+            bottom: 0;
+          }
+        }
+      }
+
+      &:checked + label {
+        z-index: 2;
+
+        span {
+          background: #fff;
+
+          &:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+          }
+
+          &:nth-child(2) {
+            opacity: 0;
+          }
+
+          &:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+          }
+        }
+      }
+    }
+  }
+
+  .mobileGroup {
+    text-align: center;
+  }
+
+  .mobile-header {
+    .sidebar {
+      width: 300px;
+      height: 100%;
+      background: #2d2d2d;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      z-index: 1;
+      transition: all .35s;
+    }
+
+    input[id="menuicon"]:checked + label + div {
+      right: 0;
+      text-align: left;
+    }
+
+    .sidebar .sidebarGroup {
+      border: 0px solid red;
+      padding-left: 28px;
+      padding-top: 24px;
+
+      li {
+        font-size: 20px;
+        color: #fff;
+        padding: 20px 20px 20px 0px;
+        cursor: pointer;
+
+        a {
+          color: #fff;
+
+          &:hover {
+            color: #47bc97;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar .mobile_logo_02 {
+    padding-top: 30px;
+    padding-left: 22px;
+  }
+
+  .mobileGroup .mobile_logo_01 {
+    padding-top: 22px;
+
+    img {
+      width: 110px;
+    }
+  }
+}
+
+/*삭제조심*/
+
+@media screen and (max-width: 468px) {
+  .header {
+    display: none;
+  }
+
+  .mobile-header {
+    display: block;
+    width: 100%;
+    height: 60px;
+    border: 0px solid blue;
+
+    input[id="menuicon"] {
+      display: none;
+
+      + label {
+        display: block;
+        width: 27px;
+        height: 22px;
+        position: relative;
+        cursor: pointer;
+        float: right;
+        margin-top: -22px;
+        margin-right: 30px;
+
+        span {
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 5px;
+          border-radius: 1px;
+          background: #909090;
+          transition: all .35s;
+        }
+      }
+    }
+  }
+
+  .mobileGroup {
+    text-align: center;
+  }
+
+  .mobile-header {
+    .sidebar {
+      width: 200px;
+      height: 100%;
+      background: #2d2d2d;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      z-index: 1;
+      transition: all .35s;
+    }
+
+    input[id="menuicon"]:checked + label + div {
+      right: 0;
+      text-align: left;
+    }
+
+    .sidebar .sidebarGroup {
+      border: 0px solid red;
+      padding-left: 25px;
+      padding-top: 24px;
+
+      li {
+        font-size: 18px;
+        color: #fff;
+        padding: 20px 20px 20px 0px;
+        cursor: pointer;
+
+        &:hover {
+          color: #47bc97;
+        }
+      }
+    }
+  }
+
+  .sidebar .mobile_logo_02 {
+    padding-top: 30px;
+    padding-left: 22px;
+  }
+
+  .mobileGroup .mobile_logo_01 {
+    padding-top: 15px;
+
+    img {
+      width: 100px;
+    }
+  }
+}
+
+/*삭제조심*/
+
+/*-------------header-모바일_종료-------------*/

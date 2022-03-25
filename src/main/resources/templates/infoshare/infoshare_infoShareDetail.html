@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="./layout/base-layout">
+      
+<body style="overflow: auto;">
+<!-- 2021.08.23 박소영 새로추가 
+	  as-is : scroll이 사라져 높이가 적용이 안됨 
+	  to-be :body를 추가하여 overflow:auto 생성;-->
+
+<!-- index.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/assets/css/infoshare.css}" >
+	</th:block>
+    
+    <!-- index.html 고유 스크립트 추가 -->
+    <th:block layout:fragment="script">
+		<script th:src="@{/js/infoshare/detail.js}"></script>
+<!--     	<script th:src="@{/assets/js/main.js}"></script> -->
+<!--         <script th:src="@{/js/main.js}"></script> -->
+    </th:block>
+
+
+	<div layout:fragment="content">
+		<div class="boardGroup">
+			<div class="title">
+				<ul>
+					<li><img style="width:65%;" src="/assets/images/main_logo_02.png"/></li>
+					<li>게시판 상세</li>
+				</ul>
+			</div>
+		</div>
+		<div class="infoShare_List">
+			 <table class="infoShare_table_02" >
+					<thead>
+						<colgroup>
+							<col width="25%"/>
+							<col width="80%"/>
+<!-- 							<col width="63%"/>
+							<col width="10%"/>
+							<col width="10%"/> -->
+						</colgroup>
+				  </thead>
+				  <tbody>
+				  <input type="hidden" id="loginUserId" th:value="${#httpServletRequest.remoteUser}"/>
+				  <tr class="frame02">
+				  		<th class="title02">번호</th>
+						<td id="nttId" name="nttId" th:text="${dto.nttId}"/>
+					</tr>
+					<tr class="frame02">
+						<th class="title02">카테고리</th>
+						<td th:if="${dto.nttGb} == '1'" th:text="java"></td>
+						<td th:if="${dto.nttGb} == '2'" th:text="js"></td>
+						<td th:if="${dto.nttGb} == '3'" th:text="기타"></td>
+						<td th:if="${dto.nttGb} == null" th:text="''"></td>
+					</tr>
+					 <tr class="frame02">
+						<th class="title02">제목</th>
+						<td th:text="${dto.title}"></a></td>
+					</tr>
+					<tr class="frame02">
+						<th class="title02">내용</th>
+						<!-- <td><textarea style="height: 300px; resize: none;" th:readonly="readonly" th:text="${dto.content}"></textarea></td> [2021.08.24] 임현수 주석처리 -->
+						<td style="height: 300px;" th:utext="${dto.content}"></td>
+					</tr>
+				    <tr class="frame02">
+					  <th class="title02">첨부파일</th>
+					  <td><a style="cursor:pointer;" th:if="${dto.originFileName != null}" th:text="${dto.originFileName}" th:onclick="'javascript:infoShare_detail.fileDownload('+${dto.nttId}+');'"></a></td>
+				    </tr>
+					<tr class="frame02">
+						<th class="title02">작성자</th>
+						<td th:text="${dto.userName}"></td>
+						<input type="hidden" id="regUserId" th:value="${dto.userId}"/>
+					</tr>
+					<tr class="frame02">
+						<th class="title02">작성일시</th>
+						<td th:text="${#temporals.format(dto.regDt, 'yyyy-MM-dd HH:mm')}"></td>
+					</tr>
+				  </tbody>
+				</table>
+					<div class="btn_area_02">
+						<button class="btn_modify"  id="modifyBtn" th:onclick="'javascript:infoShare_detail.modify();'">수정</button>
+						<!--<button class="btn_del"  id="delBtn" th:onclick="|location.href='@{/infoshare/remove(nttId=${dto.nttId})}'|">삭제</button>-->
+						<button class="btn_del"  id="delBtn" th:onclick="|javascript:infoShare_detail.remove(${dto.nttId})|">삭제</button>
+						<button class="btn_list"  th:onclick="|location.href='@{/infoshare/list(page=${requestDto.page}, type=${requestDto.type}, keyword=${requestDto.keyword})}'|">목록</button>
+					</div>
+		
+					<div class="btn_area_03">
+						<button class="btn_list02"  th:onclick="|location.href='@{/infoshare/list(page=${requestDto.page}, type=${requestDto.type}, keyword=${requestDto.keyword})}'|">목록</button>
+					</div>
+			</div>
+		</div>
+	</body>
+</html>
